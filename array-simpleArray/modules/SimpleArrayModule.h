@@ -7,7 +7,10 @@ namespace SimpleArrayModule
 
     // Функция для ввода натурального числа
     int inputNaturalNumber();
-
+    // Функция для сохранения массива в файл
+    double *loadArrayFromFile(const char *filename, int &size);
+    // Функция для записи массива в файл
+    void saveArrayToFile(const char *filename, double *array, int size);
     // Функция для ввода массива действительных чисел
     double *inputRealNumbers(int n);
     // Функция для вычисления суммы элементов массива
