@@ -25,87 +25,92 @@ namespace SimpleArrayModule
     }
 
     // Функция для ввода массива действительных чисел
-    double *inputRealNumbers(int n)
+    vector<double> inputRealNumbers(size_t n)
     {
-        double *a = new double[n];
-        for (int i = 0; i < n; i++)
+        vector<double> a(n);
+        cout << "Введите " << n << " действительных чисел:\n";
+        for (int i = 0; i < n; ++i)
         {
-            cout << "Введите действительное число a" << i + 1 << ": ";
             cin >> a[i];
         }
-
         return a;
     }
 
-    // Функция для вычисления суммы элементов массива
-    double calculateSum(double *a, int n)
+    // Функция для вычисления суммы элементов массива а, размера n
+    double calculateSum(double *a, size_t n)
     {
         double sum = 0.0;
-        for (int i = 0; i < n; i++) // исправлено i <= n на i < n
+        for (size_t i = 0; i < n; i++) // исправлено i <= n на i < n
         {
             sum += a[i];
         }
         return sum;
     }
 
-    // Функция для вычисления результата sin(abs(sum))
-    double calculateResult(double sum)
+    // Функция для вычисления результата sin(abs(sum))    double calculateSum(const vector<double>& a) {
+    double sum = 0.0;
+    for (double value : a)
     {
-        return sin(abs(sum));
+        sum += value;
     }
+    return sum;
+}
 
-    // Функция для вывода результата
-    void displayResult(double result)
+// Функция для вывода результата
+void displayResult(double result)
+{
+    cout << "Результат: sin|a1 + a2 + ... + an| (в рад.) = " << result << endl;
+}
+
+// Функция для записи массива в файл
+void saveArrayToFile(const char *filename, const vector<double> &a)
+{
+    ofstream outfile(filename);
+    if (outfile.is_open())
     {
-        cout << "Результат: sin|a1 + a2 + ... + an| (в рад.) = " << result << endl;
+        outfile << a.size() << endl;
+        for (double value : a)
+        {
+            outfile << value << " ";
+        }
+        outfile.close();
     }
-
-    // Функция для записи массива в файл
-    void saveArrayToFile(const char *filename, double *array, int size)
+    else
     {
-        ofstream outFile(filename);
-        if (!outFile)
-        {
-            cerr << "Не удается открыть файл для записи: " << filename << endl;
-            return;
-        }
-        for (int i = 0; i < size; i++)
-        {
-            outFile << array[i] << endl; // Записываем каждое число в отдельной строке
-        }
-        outFile.close();
+        cerr << "Ошибка: не удалось открыть файл для записи.\n";
     }
+}
 
-    // Функция для загрузки массива из файла
-    double *loadArrayFromFile(const char *filename, int &size)
+// Функция для загрузки массива из файла с именем filename, размера size
+vector<double> loadArrayFromFile(const char *filename)
+{
+    vector<double> a;
+    ifstream infile(filename);
+    if (infile.is_open())
     {
-        ifstream inFile(filename);
-        if (!inFile)
+        int size;
+        infile >> size;
+        a.resize(size);
+        for (int i = 0; i < size; ++i)
         {
-            cerr << "Не удается открыть файл для чтения: " << filename << endl;
-            size = 0;
-            return nullptr;
+            infile >> a[i];
         }
-
-        // Подсчет количества чисел в файле
-        size = 0;
-        double temp;
-        while (inFile >> temp)
-        {
-            size++;
-        }
-
-        // Возврат указателя к началу файла
-        inFile.clear();  // Сброс состояния потока
-        inFile.seekg(0); // Перемещение указателя на начало файла
-
-        double *array = new double[size];
-        for (int i = 0; i < size; i++)
-        {
-            inFile >> array[i]; // Чтение чисел в массив
-        }
-
-        inFile.close();
-        return array;
+        infile.close();
     }
+    else
+    {
+        cerr << "Ошибка: не удалось открыть файл для чтения.\n";
+    }
+    return a;
+}
+
+// Функция для заполнения массива случайными числами
+void fillArrayRandomly(vector<double> &a, double min_value, double max_value)
+{
+    srand(time(nullptr));
+    for (int i = 0; i < a.size(); ++i)
+    {
+        a[i] = min_value + static_cast<double>(rand()) / RAND_MAX * (max_value - min_value);
+    }
+}
 }
