@@ -1,4 +1,3 @@
-// main.cpp
 #include <iostream>                    // для std::cin и std::cout
 #include "modules/SimpleArrayModule.h" // для функций ввода и вычисления
 #include <vector>                      // для std::vector
@@ -9,76 +8,146 @@ using namespace SimpleArrayModule; // для использования прос
 // Главная функция программы вычисления синуса модуля суммы элементов массива "а"
 int main()
 {
-    vector<double> a; // Вектор действительных чисел
-    int n = 0;        // Количество элементов вектора
-    int choice;       // Вариант ввода
+    int type_of_data_choice;
 
-    try
+    cout << "Выберите тип данных для работы:\n";
+    cout << "1 - vector\n";
+    cout << "2 - array\n";
+    cin >> type_of_data_choice;
+
+    switch (type_of_data_choice)
     {
+    case 1:
+    {
+        std::vector<double> a; // Вектор действительных чисел
+        int n = 0;             // Количество элементов вектора
+        int inputChoice;       // Вариант ввода для вектора
+
         cout << "Выберите вариант ввода:\n";
-        cout << "1 - Загрузить массив из файла\n";
-        cout << "2 - Ввести массив вручную\n";
-        cout << "3 - Заполнение случайными числами\n";
-        cin >> choice;
+        cout << "1 - Загрузить вектор из файла\n";
+        cout << "2 - Ввести вектор вручную\n";
+        cout << "3 - Заполнение вектора случайными числами\n";
+        cin >> inputChoice;
 
-        switch (choice)
+        try
         {
-        case 1:
-            // Загрузка массива из файла
-            a = loadArrayFromFile("array.txt", n); // Загружаем массив
-            if (a == nullptr)
+            switch (inputChoice)
             {
-                throw runtime_error("Ошибка при загрузке массива из файла.");
+            case 1:
+                // Загрузка вектора из файла
+                a = loadVectorFromFile("array.txt"); // Предполагается, что эта функция реализована
+
+                break;
+
+            case 2:
+                // Ввод натурального числа n
+                n = inputNaturalNumber();
+
+                // Ввод вектора действительных чисел (до n элементов)
+                a = inputRealNumbersToVector(n); // Предполагается, что эта функция реализована
+
+                // Сохранение вектора a в файл array.txt
+                saveVectorToFile("array.txt", a);
+                break;
+
+            case 3:
+                // Ввод натурального числа n
+                n = inputNaturalNumber();
+
+                // Заполнение вектора случайными числами (до n элементов)
+                a = fillVectorRandomly(n, 1.0, 10.0); // Предполагается, что эта функция реализована
+
+                saveVectorToFile("array.txt", a);
+
+                break;
+
+            default:
+                cout << "Неверный выбор варианта ввода.\n";
+                break;
             }
-            break;
 
-        case 2:
-            // Ввод натурального числа n
-            n = inputNaturalNumber();
+            double sum = calculateSum(a); // Вычисление суммы элементов вектора
 
-            // Ввод массива действительных чисел
-            a = inputRealNumbers(n);
+            double result = calculateResult(sum); // Вычисление результата
 
-            // Сохранение массива в файл
-            saveArrayToFile("array.txt", a);
-
-            break;
-
-        case 3:
-            n = inputNaturalNumber();
-            a.resize(n);
-            double min_value, max_value;
-            cout << "Введите минимальное значение для случайных чисел: ";
-            cin >> min_value;
-            cout << "Введите максимальное значение для случайных чисел: ";
-            cin >> max_value;
-            fillArrayRandomly(a, min_value, max_value);
-            saveArrayToFile("array.txt", a);
-            break;
-
-        default:
-            throw runtime_error("Некорректный выбор.");
+            displayResult(result);
         }
-
-        // Вычисление суммы элементов массива
-        double sum = calculateSum(a, n);
-
-        // Вычисление результата
-        double result = calculateResult(sum);
-
-        // Вывод результата
-        displayResult(result);
+        catch (const std::exception &e)
+        {
+            std::cerr << "Ошибка: " << e.what() << std::endl;
+            return 1;
+        }
     }
-    catch (const runtime_error &e)
+    break;
+    case 2:
     {
-        cerr << "Ошибка: " << e.what() << "\n";
-        return 1; // Завершение программы в случае ошибки
-    }
-    catch (const exception &e)
-    {
-        cerr << "Неизвестная ошибка: " << e.what() << "\n";
-        return 1; // Завершение программы в случае неизвестной ошибки
-    }
+        double sum = 0;      // Инициализированная переменная суммы
+        double result = 0;   // Инициализированная переменная результата
+        double *a = nullptr; // Массив действительных чисел
+        int n = 0;           // Количество элементов вектора
+        int inputChoice;     // Вариант ввода для вектора
 
-    return 0; // Завершение программы
+        cout << "Выберите массив ввода:\n";
+        cout << "1 - Загрузить вектор из файла\n";
+        cout << "2 - Ввести массив вручную\n";
+        cout << "3 - Заполнение массива случайными числами\n";
+        cin >> inputChoice;
+
+        try
+        {
+            switch (inputChoice)
+            {
+            case 1:
+                a = loadArrayFromFile("array.txt", n); // Загружаем массив из файла с именем array.txt и размером n
+                if (a == nullptr)
+                {
+                    throw runtime_error("Ошибка при загрузке массива из файла.");
+                }
+                break;
+
+            case 2:
+
+                // Ввод натурального числа n
+                n = inputNaturalNumber();
+
+                // Ввод массива действительных чисел (до n элементов)
+                a = inputRealNumbers(n);
+
+            case 3:
+                // Ввод натурального числа n
+                n = inputNaturalNumber();
+
+                // Заполнение вектора случайными числами (до n элементов)
+                a = fillArrayRandomly(n, 1.0, 10.0);
+
+                // Сохранение вектора a в файл array.txt
+                saveArrayToFile("array.txt", a, n);
+
+                break;
+
+            default:
+                cout << "Неверный выбор варианта ввода.\n";
+                break;
+            }
+
+            double sum = calculateSum(a, n); // Вычисление суммы элементов вектора
+
+            double result = calculateResult(sum); // Вычисление результата
+
+            displayResult(result);
+
+            break;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Ошибка: " << e.what() << std::endl;
+            return 1;
+        }
+        catch (const runtime_error &e)
+        {
+            cerr << "Ошибка: " << e.what() << "\n";
+            return 1; // Завершение программы в случае ошибки
+        }
+    }
+    }
 }
