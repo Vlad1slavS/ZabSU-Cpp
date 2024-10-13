@@ -16,8 +16,6 @@ int main()
 
     double result = calculateResult(1.0);
     assert(fabs(result - sin(1.0)) < 1e-6);
-std:
-    cout << "Результат: " << result << std::endl;
 
     result = calculateResult(-1.0);
     assert(fabs(result - sin(1.0)) < 1e-6);
