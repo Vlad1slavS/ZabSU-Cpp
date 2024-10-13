@@ -1,6 +1,7 @@
 #include <iostream>                    // для std::cin и std::cout
 #include "modules/SimpleArrayModule.h" // для функций ввода и вычисления
 #include <vector>                      // для std::vector
+#include <fstream>                     // для работы с файлами
 
 using namespace std;               // для использования пространства имен std
 using namespace SimpleArrayModule; // для использования пространства имен SimpleArrayModule
@@ -35,7 +36,7 @@ int main()
             {
             case 1:
                 // Загрузка вектора из файла
-                a = loadVectorFromFile("array.txt"); // Предполагается, что эта функция реализована
+                a = loadVectorFromFile<double>("numbers.txt");
 
                 break;
 
@@ -44,7 +45,7 @@ int main()
                 n = inputNaturalNumber();
 
                 // Ввод вектора действительных чисел (до n элементов)
-                a = inputRealNumbersToVector(n); // Предполагается, что эта функция реализована
+                a = inputRealNumbersToVector<double>(n);
 
                 // Сохранение вектора a в файл array.txt
                 saveVectorToFile("array.txt", a);
@@ -55,7 +56,7 @@ int main()
                 n = inputNaturalNumber();
 
                 // Заполнение вектора случайными числами (до n элементов)
-                a = fillVectorRandomly(n, 1.0, 10.0); // Предполагается, что эта функция реализована
+                a = fillVectorRandomly<double>(10, 1.0, 10.0);
 
                 saveVectorToFile("array.txt", a);
 
@@ -111,7 +112,8 @@ int main()
                 n = inputNaturalNumber();
 
                 // Ввод массива действительных чисел (до n элементов)
-                a = inputRealNumbers(n);
+                a = inputRealNumbers<double>(n);
+                break;
 
             case 3:
                 // Ввод натурального числа n
