@@ -2,6 +2,8 @@
 #include "modules/SimpleArrayModule.h" // для функций ввода и вычисления
 #include <vector>                      // для std::vector
 #include <fstream>                     // для работы с файлами
+#include <cassert>                     // для использования assert
+#include <cmath>                       // для математических операций
 
 using namespace std;               // для использования пространства имен std
 using namespace SimpleArrayModule; // для использования пространства имен SimpleArrayModule
@@ -9,7 +11,22 @@ using namespace SimpleArrayModule; // для использования прос
 // Главная функция программы вычисления синуса модуля суммы элементов массива "а"
 int main()
 {
+
     int type_of_data_choice;
+
+    double result = calculateResult(1.0);
+    assert(fabs(result - sin(1.0)) < 1e-6);
+std:
+    cout << "Результат: " << result << std::endl;
+
+    result = calculateResult(-1.0);
+    assert(fabs(result - sin(1.0)) < 1e-6);
+
+    result = calculateResult(1e-10);
+    assert(fabs(result - sin(1e-10)) < 1e-6);
+
+    result = calculateResult(1e100);
+    assert(fabs(result - sin(1e100)) < 1e-6);
 
     cout << "Выберите тип данных для работы:\n";
     cout << "1 - vector\n";
