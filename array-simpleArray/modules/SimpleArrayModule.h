@@ -2,6 +2,7 @@
 #ifndef ARRAY_SIMPLEARRAY_H // Для упрощения и предотвращения повторного включения кода
 #define ARRAY_SIMPLEARRAY_H
 #include <fstream> // для работы с файлами
+#include <string>  // Для string
 
 namespace SimpleArrayModule
 {
