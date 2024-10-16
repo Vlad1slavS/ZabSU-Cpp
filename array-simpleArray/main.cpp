@@ -51,8 +51,7 @@ int main()
             {
             case 1:
                 // Загрузка вектора из файла
-                a = loadVectorFromFile<double>("numbers.txt");
-
+                a = loadVectorFromFile<double>("array.txt");
                 break;
 
             case 2:
@@ -114,7 +113,7 @@ int main()
             switch (inputChoice)
             {
             case 1:
-                a = loadArrayFromFile("array.txt", n); // Загружаем массив из файла с именем array.txt и размером n
+                a = loadArrayFromFile<double>("array.txt", n); // Загружаем массив из файла с именем array.txt и размером n
                 if (a == nullptr)
                 {
                     throw runtime_error("Ошибка при загрузке массива из файла.");
@@ -129,7 +128,6 @@ int main()
                 // Ввод массива действительных чисел (до n элементов)
                 a = inputRealNumbers<double>(n);
                 break;
-
             case 3:
                 // Ввод натурального числа n
                 n = inputNaturalNumber();
