@@ -1,14 +1,17 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
+/// Класс для работы с контактами
 class Contact
 {
+    // Защищенные поля
 private:
     std::string name;        // Имя контакта
     std::string phoneNumber; // Номер телефона
     std::string email;       // Электронная почта
     std::string address;     // Адрес контакта
-
+    // Публичные методы
 public:
     // Конструктор для инициализации полей класса
     Contact(const std::string &name, const std::string &phoneNumber,
@@ -42,6 +45,11 @@ public:
     // Сеттер для обновления имени
     void setName(const std::string &newName)
     {
+        if (newName.empty())
+        {
+            std::cerr << "Ошибка: Имя не может быть пустым.\n";
+            return;
+        }
         name = newName;
     }
 
@@ -52,14 +60,30 @@ public:
     }
 
     // Сеттер для обновления электронной почты
+    // Сеттер для обновления электронной почты
     void setEmail(const std::string &newEmail)
     {
+        if (newEmail.empty())
+        {
+            std::cerr << "Ошибка: Электронная почта не может быть пустой.\n";
+            return;
+        }
+        if (newEmail.find('@') == std::string::npos)
+        {
+            std::cerr << "Ошибка: Неверный адрес электронной почты.\n";
+        }
         email = newEmail;
     }
 
     // Сеттер для обновления адреса
+    // Сеттер для обновления адреса
     void setAddress(const std::string &newAddress)
     {
+        if (newAddress.empty())
+        {
+            std::cerr << "Ошибка: Адрес не может быть пустым.\n";
+            return;
+        }
         address = newAddress;
     }
 
@@ -88,10 +112,27 @@ public:
 // Пример использования класса Contact
 int main()
 {
+
+    string asp = "==================================";
+
     Contact contact1("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
     Contact contact2("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2");
 
+    // Динамическое создание объекта
+    cout << asp << endl;
+    cout << "Динамическое создание объекта" << endl;
+    Contact *contact3 = new Contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
+    Contact *contact4 = new Contact("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2");
+
     // Отображаем информацию о контактах
+    contact3->displayInfo();
+    std::cout << std::endl;
+    contact4->displayInfo();
+
+    cout << asp << endl;
+
+    // Отображаем информацию о контактах
+    cout << "Пример использования класса Contact" << endl;
     contact1.displayInfo();
     std::cout << std::endl;
     contact2.displayInfo();
