@@ -1,118 +1,62 @@
+// Автор: Степанов Владислав ИВТ-23
+// Подключаем библиотеки для работы
 #include <iostream>
 #include <string>
+#include <cassert>
+#include "Contact.h"
+
 using namespace std;
 
-/// Класс для работы с контактами
-class Contact
-{
-    // Защищенные поля
-private:
-    std::string name;        // Имя контакта
-    std::string phoneNumber; // Номер телефона
-    std::string email;       // Электронная почта
-    std::string address;     // Адрес контакта
-    // Публичные методы
-public:
-    // Конструктор для инициализации полей класса
-    Contact(const std::string &name, const std::string &phoneNumber,
-            const std::string &email, const std::string &address)
-        : name(name), phoneNumber(phoneNumber), email(email), address(address) {}
+// Функция для тестирования класса Contact
+void testContactClass() {
+    // Проверка конструктора и геттеров
+    Contact contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
+    assert(contact.getName() == "Иван Иванов");
+    assert(contact.getPhoneNumber() == "123-456-7890");
+    assert(contact.getEmail() == "ivan@example.com");
+    assert(contact.getAddress() == "Улица Пушкина, д. 1");
 
-    // Метод для получения имени контакта
-    std::string getName() const
-    {
-        return name;
-    }
+    // Проверка сеттеров
+    contact.setName("Петр Петров");
+    assert(contact.getName() == "Петр Петров");
 
-    // Метод для получения номера телефона
-    std::string getPhoneNumber() const
-    {
-        return phoneNumber;
-    }
+    contact.setPhoneNumber("098-765-4321");
+    assert(contact.getPhoneNumber() == "098-765-4321");
 
-    // Метод для получения электронной почты
-    std::string getEmail() const
-    {
-        return email;
-    }
+    contact.setEmail("petr@example.com");
+    assert(contact.getEmail() == "petr@example.com");
 
-    // Метод для получения адреса
-    std::string getAddress() const
-    {
-        return address;
-    }
+    contact.setAddress("Улица Чехова, д. 2");
+    assert(contact.getAddress() == "Улица Чехова, д. 2");
 
-    // Сеттер для обновления имени
-    void setName(const std::string &newName)
-    {
-        if (newName.empty())
-        {
-            std::cerr << "Ошибка: Имя не может быть пустым.\n";
-            return;
-        }
-        name = newName;
-    }
+    // Проверка методов обновления
+    contact.updatePhoneNumber("111-222-3333");
+    assert(contact.getPhoneNumber() == "111-222-3333");
 
-    // Сеттер для обновления номера телефона
-    void setPhoneNumber(const std::string &newPhoneNumber)
-    {
-        phoneNumber = newPhoneNumber;
-    }
+    contact.updateEmail("ivanov@newmail.com");
+    assert(contact.getEmail() == "ivanov@newmail.com");
 
-    // Сеттер для обновления электронной почты
-    // Сеттер для обновления электронной почты
-    void setEmail(const std::string &newEmail)
-    {
-        if (newEmail.empty())
-        {
-            std::cerr << "Ошибка: Электронная почта не может быть пустой.\n";
-            return;
-        }
-        if (newEmail.find('@') == std::string::npos)
-        {
-            std::cerr << "Ошибка: Неверный адрес электронной почты.\n";
-        }
-        email = newEmail;
-    }
+    // Проверка валидации ввода
+    contact.setName("");
+    assert(contact.getName() == "Петр Петров"); // Имя не должно измениться
 
-    // Сеттер для обновления адреса
-    // Сеттер для обновления адреса
-    void setAddress(const std::string &newAddress)
-    {
-        if (newAddress.empty())
-        {
-            std::cerr << "Ошибка: Адрес не может быть пустым.\n";
-            return;
-        }
-        address = newAddress;
-    }
+    contact.setEmail("");
+    assert(contact.getEmail() == "ivanov@newmail.com"); // Почта не должна измениться
 
-    // Метод для обновления номера телефона
-    void updatePhoneNumber(const std::string &newPhoneNumber)
-    {
-        phoneNumber = newPhoneNumber;
-    }
+    contact.setEmail("ivanexample.com");
+    assert(contact.getEmail() == "ivanov@newmail.com"); // Почта не должна измениться
 
-    // Метод для обновления электронной почты
-    void updateEmail(const std::string &newEmail)
-    {
-        email = newEmail;
-    }
+    contact.setAddress("");
+    assert(contact.getAddress() == "Улица Чехова, д. 2"); // Адрес не должен измениться
 
-    // Метод для отображения информации о контакте
-    void displayInfo() const
-    {
-        std::cout << "Контакт: " << name << "\n"
-                  << "Телефон: " << phoneNumber << "\n"
-                  << "Электронная почта: " << email << "\n"
-                  << "Адрес: " << address << "\n";
-    }
-};
+}
 
-// Пример использования класса Contact
-int main()
-{
+int main() {
+    // Проверка класса
+    testContactClass(); // Вызов функции для тестирования
+    std::cout << "Все тесты пройдены успешно." << std::endl; 
 
+    // Основной код программы
     string asp = "==================================";
 
     Contact contact1("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
@@ -121,7 +65,7 @@ int main()
     // Динамическое создание объекта
     cout << asp << endl;
     cout << "Динамическое создание объекта" << endl;
-    Contact *contact3 = new Contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
+    Contact *contact3 = new Contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");  
     Contact *contact4 = new Contact("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2");
 
     // Отображаем информацию о контактах
@@ -141,11 +85,9 @@ int main()
     contact1.updatePhoneNumber("111-222-3333");
     contact2.updateEmail("maria.s@example.com");
 
-    // Отображение обновленной информации
-    std::cout << "\nОбновленная информация:\n";
-    contact1.displayInfo();
-    std::cout << std::endl;
-    contact2.displayInfo();
+    // Освобождение памяти
+    delete contact3;
+    delete contact4;
 
     return 0;
 }
