@@ -18,6 +18,12 @@ Matrix::Matrix(size_t rows, size_t cols){
 // Конструктор (с размером квадратной матрицы)
 Matrix::Matrix(size_t size) : rows(size), cols(size), data(size * size, 0.0) {}
 
+Matrix::Matrix(){
+    this->rows = 0;
+    this->cols = 0;
+    this->data = std::vector<double>(0, 0.0);
+}
+
 // Получение строки
 std::vector<double> Matrix::getRow(size_t row) const
 {
