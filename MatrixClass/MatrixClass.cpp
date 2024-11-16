@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cmath>
 
+// Конструктор (с кол-вом колонок и строк)
 Matrix::Matrix(size_t rows, size_t cols){
     if (rows == 0 || cols == 0) {
         throw std::invalid_argument("Размеры матрицы должны быть положительными");
@@ -14,9 +15,10 @@ Matrix::Matrix(size_t rows, size_t cols){
     this->cols = cols;
     this->data = std::vector<double>(rows * cols, 0.0);
 }
-
+// Конструктор (с размером квадратной матрицы)
 Matrix::Matrix(size_t size) : rows(size), cols(size), data(size * size, 0.0) {}
 
+// Получение строки
 std::vector<double> Matrix::getRow(size_t row) const
 {
     if (row < 1 || row > rows)
@@ -31,14 +33,17 @@ std::vector<double> Matrix::getRow(size_t row) const
     return rowData;
 }
 
+// Заполнение матрицы значением value   
 void Matrix::fill(double value)
 {
     std::fill(data.begin(), data.end(), value);
 }
 
+// Получение количества строк и столбцов
 size_t Matrix::getRowscnt() const { return rows; }
 size_t Matrix::getColscnt() const { return cols; }
 
+// Вывод матрицы
 void Matrix::printMatrix() const
 {
     for (size_t i = 1; i <= rows; i++)
@@ -51,6 +56,7 @@ void Matrix::printMatrix() const
     }
 }
 
+// Доступ к элементам
 double& Matrix::operator()(size_t i, size_t j)
 {
     if (i < 1 || i > rows || j < 1 || j > cols) {
@@ -59,6 +65,7 @@ double& Matrix::operator()(size_t i, size_t j)
     return data[(i - 1) * cols + (j - 1)];
 }
 
+// Доступ к элементам (константный)
 double Matrix::operator()(size_t i, size_t j) const {
     if (i < 1 || i > rows || j < 1 || j > cols) {
         throw std::out_of_range("Индексы вне диапазона");
@@ -66,6 +73,7 @@ double Matrix::operator()(size_t i, size_t j) const {
     return data[(i - 1) * cols + (j - 1)];
 }
 
+// Заполнение матрицы случайными числами
 void Matrix::fillRand()
 {
     static bool first_call = true;
@@ -83,6 +91,7 @@ void Matrix::fillRand()
     }
 }
 
+// Перегрузка оператора "+" для сложения матриц
 Matrix Matrix::operator+(const Matrix& other) const
 {
     if (rows != other.rows || cols != other.cols)
@@ -100,6 +109,7 @@ Matrix Matrix::operator+(const Matrix& other) const
     return result;
 }
 
+// Перегрузка оператора "-" для вычитания матриц
 Matrix Matrix::operator-(const Matrix& other) const
 {
     if (rows != other.rows || cols != other.cols)
@@ -117,6 +127,7 @@ Matrix Matrix::operator-(const Matrix& other) const
     return res;
 }
 
+// Перегрузка оператора "*" для умножения матрицы на скаляр
 Matrix Matrix::operator*(double scalar) const {
     Matrix result(rows, cols);
     for (size_t i = 1; i <= rows; ++i) {
@@ -127,6 +138,7 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
+// Перегрузка оператора "*" для умножения матриц
 Matrix Matrix::operator*(const Matrix& other) const {
     if (cols != other.rows) {
         throw std::invalid_argument("Количество столбцов первой матрицы должно быть равно количеству строк второй матрицы");
@@ -144,6 +156,7 @@ Matrix Matrix::operator*(const Matrix& other) const {
     return result;
 }
 
+// Транспонирование матрицы
 Matrix Matrix::transpose() const {
     Matrix result(rows, cols);
     for (size_t i = 1; i <= rows; i++) {
@@ -154,6 +167,7 @@ Matrix Matrix::transpose() const {
     return result;
 }
 
+// Создание диагональной матрицы
 Matrix Matrix::makeDiagonalMatrix() const {
     if (rows != cols) {
         throw std::invalid_argument("Матрица должна быть квадратной");
@@ -169,36 +183,32 @@ Matrix Matrix::makeDiagonalMatrix() const {
     return result;
 }
 
+// Вычисление определителя (методом Гаусса)
 double Matrix::determinant() const {
     if (rows != cols) {
         throw std::invalid_argument("Матрица должна быть квадратной для вычисления определителя");
     }
 
     double det = 1.0;
-    // Создаём копию матрицы для проведения вычислений
     Matrix temp = *this;
 
     for (size_t i = 1; i <= temp.rows; i++){
         size_t pivot = i;
-        // Поиск максимального элемента в текущем столбце для частичного выбора главного элемента
         for (size_t j = i + 1; j <= temp.rows; j++){
             if (std::abs(temp(j, i)) > std::abs(temp(pivot, i))){
                 pivot = j;
             }
         }
-        // Если найденный ведущий элемент не стоит на диагонали, меняем строки местами
         if (pivot != i){
             for (size_t j = 1; j <= temp.cols; j++){
                 std::swap(temp(i, j), temp(pivot, j));
             }
-            det = -det; // Меняем знак определителя при перестановке строк
+            det = -det; 
         }
-        // Если на диагонали элемент равен нулю, определитель равен нулю
         if (temp(i, i) == 0){
             return 0.0;
         }
         det *= temp(i, i);
-        // Приводим матрицу к верхнетреугольному виду
         for (size_t j = i + 1; j <= temp.rows; j++){
             double factor = temp(j, i) / temp(i, i);
             for (size_t k = i; k <= temp.cols; k++){

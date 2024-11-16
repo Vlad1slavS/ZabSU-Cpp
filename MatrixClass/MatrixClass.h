@@ -44,7 +44,7 @@ public:
     Matrix transpose() const;
     // Создание диагональной матрицы
     Matrix makeDiagonalMatrix() const;
-    // Вычисления определителя матрицы
+    // Вычисления определителя матрицы (методом Гаусса)
     double determinant() const;
 };
 
