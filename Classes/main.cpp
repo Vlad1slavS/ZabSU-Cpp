@@ -1,5 +1,4 @@
 // Автор: Степанов Владислав ИВТ-23
-// Подключаем библиотеки для работы
 #include <iostream>
 #include <string>
 #include <cassert>
