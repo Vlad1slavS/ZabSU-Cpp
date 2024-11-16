@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <cassert>
+#include <cstdlib> // Добавлено для std::srand и std::rand
+#include <ctime>
+#include <stdexcept>
 
 using namespace std;
 
@@ -27,14 +29,17 @@ public:
     size_t getColscnt() const;
     // Метод вывода матрицы
     void printMatrix() const;
-    // Метод полчения доступа к элемнту i-й строки и j-го столбца
-    double& operator()(size_t i, size_t j);
+    // Метод получения доступа к элементу i-й строки и j-го столбца
+    double &operator()(size_t i, size_t j);
+    // Метод заполнения матрицы случайными числами
+    void fillRand();
 };
 
 Matrix::Matrix(size_t rows, size_t cols)
     : data(rows * cols, 0.0), rows(rows), cols(cols) {}
 
-Matrix::Matrix(size_t size) : data(size * size, 0.0), rows(size), cols(size) {}
+Matrix::Matrix(size_t size)
+    : data(size * size, 0.0), rows(size), cols(size) {}
 
 std::vector<double> Matrix::getRow(size_t row) const
 {
@@ -50,10 +55,7 @@ void Matrix::fill(double value)
     std::fill(data.begin(), data.end(), value);
 }
 
-size_t Matrix::getRowscnt() const
-{
-    return rows;
-}
+size_t Matrix::getRowscnt() const { return rows; }
 size_t Matrix::getColscnt() const { return cols; }
 
 void Matrix::printMatrix() const
@@ -68,17 +70,38 @@ void Matrix::printMatrix() const
     }
 }
 
-double& Matrix::operator()(size_t i, size_t j)  {
-    return data[i * cols + j];
+double &Matrix::operator()(size_t i, size_t j)
+{
+    if (i >= rows || j >= cols)
+    {
+        throw std::out_of_range("Индексы вне диапазона");
+    }
+    return data[(i-1) * cols + (j-1)];
+}
+
+void Matrix::fillRand()
+{
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+        data[i] = static_cast<double>(std::rand()) / RAND_MAX;
+    }
 }
 
 int main()
 {
-    Matrix square(3);
-    cout << "Матрица создана!" << endl;
-    square.fill(3.0);
-    square.printMatrix();
-    double element = square(2, 2);
-    cout << element << endl;
+    try
+    {
+        Matrix square(5);
+        cout << "Матрица создана!" << endl;
+        square.fillRand();
+        square.printMatrix();
+        double element = square(1, 2);
+        cout << element << endl;
+    }
+    catch (const std::exception &e)
+    {
+        cout << e.what() << endl;
+    }
     return 0;
 }

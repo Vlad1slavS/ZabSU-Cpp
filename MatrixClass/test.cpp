@@ -372,6 +372,8 @@ int main() {
         // Создание матрицы 3x3 и заполнение случайными числами
         Matrix A(3, 3);
         A.randomFill(1.0, 10.0);
+        double element = A(2, 2);
+        std::cout << "Элемент (2, 2): " << element << std::endl;
         std::cout << "Матрица A:" << std::endl;
         A.print();
 
