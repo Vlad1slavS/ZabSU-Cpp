@@ -3,11 +3,21 @@
 #include <ctime>
 #include <algorithm> // Для std::fill
 
-Matrix::Matrix(size_t rows, size_t cols)
-    : data(rows * cols, 0.0), rows(rows), cols(cols) {}
+Matrix::Matrix(size_t rows, size_t cols){
+    if (rows > 0) {
+        this->rows = rows;
+        this->cols = cols;
+        this->data = std::vector<double>(rows * cols, 0.0);
+    }
+}
 
-Matrix::Matrix(size_t size)
-    : data(size * size, 0.0), rows(size), cols(size) {}
+Matrix::Matrix(size_t size) {
+    if (rows > 0) {
+        this->rows = size;
+        this->cols = size;
+        this->data = std::vector<double>(size * size, 0.0);
+    }
+}
 
 
 std::vector<double> Matrix::getRow(size_t row) const
@@ -55,4 +65,31 @@ void Matrix::fillRand()
     {
         data[i] = static_cast<double>(std::rand()) / RAND_MAX;
     }
+}
+
+Matrix Matrix::operator+(const Matrix& other) const
+{
+    if (rows != other.rows || cols != other.cols)
+    {
+        throw std::invalid_argument("Размеры матриц не совпадают");
+    }
+    Matrix result(rows, cols);
+    for (size_t i = 0; i < data.size(); i++)
+    {
+        result.data[i] = data[i] + other.data[i];
+    }
+    return result;
+}
+
+Matrix Matrix::operator-(const Matrix& other) const
+{
+    if (rows != other.rows || cols != other.cols)
+    {
+        throw std::invalid_argument("Размеры матриц не совпадают");
+    }
+    Matrix res(rows, cols);
+    for (int i = 0; i < data.size(); i++) {
+        res.data[i] = data[i] - other.data[i];
+    }
+    return res;
 }

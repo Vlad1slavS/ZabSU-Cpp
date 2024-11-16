@@ -31,6 +31,12 @@ public:
     double& operator()(size_t i, size_t j);
     // Метод заполнения матрицы случайными числами
     void fillRand();
+    // Оператор сложения матриц
+    Matrix operator+(const Matrix& other) const;
+    // Оператор вычитания матриц
+    Matrix operator-(const Matrix& other) const;
+    // Оператор умножения матрицы на число
+    Matrix operator*(double scalar) const;
 };
 
 #endif // MATRIX_H

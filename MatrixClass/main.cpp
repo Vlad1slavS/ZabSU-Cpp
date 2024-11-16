@@ -7,12 +7,14 @@ int main()
 {
     try
     {
-        Matrix square(5);
-        cout << "Матрица создана!" << endl;
-        square.fillRand();
-        square.printMatrix();
-        double element = square(1, 2); // Работа с матрицей, где индексация начинается с 1
-        cout << "Элемент на позиции (1, 2): " << element << endl;
+        Matrix A(3);
+        A.fill(1);
+        Matrix B(3);
+        B.fill(3);
+        Matrix C = A + B;
+        C.printMatrix();
+        Matrix D = A - B;
+        D.printMatrix();
     }
     catch (const std::exception& e)
     {
