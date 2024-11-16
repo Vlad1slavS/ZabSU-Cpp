@@ -7,14 +7,26 @@ int main()
 {
     try
     {
+        // Создание матрицы 3x3 и заполнение единицами
         Matrix A(3);
         A.fill(1);
+        // Создание матрицы 3x3 и заполнение случайными числами
         Matrix B(3);
         B.fill(3);
+        // Сумма матриц
         Matrix C = A + B;
-        C.printMatrix();
-        Matrix D = A - B;
-        D.printMatrix();
+        // Вычитание матриц
+        Matrix D = B - A;
+        // Умножение на скаляр
+        Matrix E = A * 2;
+        // Умножение матриц
+        Matrix F = A * B;  
+        // Транспонирование матрицы
+        Matrix G(3);
+        G.fillRand();
+        G.transpose();
+
+
     }
     catch (const std::exception& e)
     {

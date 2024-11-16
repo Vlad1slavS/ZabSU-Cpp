@@ -29,6 +29,7 @@ public:
     void printMatrix() const;
     // Метод получения доступа к элементу i-й строки и j-го столбца
     double& operator()(size_t i, size_t j);
+    double operator()(size_t i, size_t j) const;
     // Метод заполнения матрицы случайными числами
     void fillRand();
     // Оператор сложения матриц
@@ -37,6 +38,10 @@ public:
     Matrix operator-(const Matrix& other) const;
     // Оператор умножения матрицы на число
     Matrix operator*(double scalar) const;
+    // Оператор умножения матриц
+    Matrix operator*(const Matrix& other) const;
+    // Транспонирование матрицы
+    Matrix transpose() const;
 };
 
 #endif // MATRIX_H
