@@ -1,7 +1,7 @@
 #include "MatrixClass.h"
-#include <cstdlib> // Для std::srand и std::rand
+#include <cstdlib> 
 #include <ctime>
-#include <algorithm> // Для std::fill
+#include <algorithm> 
 #include <stdexcept>
 #include <iostream>
 #include <cmath>
