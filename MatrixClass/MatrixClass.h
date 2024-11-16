@@ -42,6 +42,10 @@ public:
     Matrix operator*(const Matrix& other) const;
     // Транспонирование матрицы
     Matrix transpose() const;
+    // Создание диагональной матрицы
+    Matrix makeDiagonalMatrix() const;
+    // Вычисления определителя матрицы
+    double determinant() const;
 };
 
 #endif // MATRIX_H

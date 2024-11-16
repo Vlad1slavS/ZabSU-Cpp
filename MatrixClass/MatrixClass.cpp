@@ -4,6 +4,7 @@
 #include <algorithm> // Для std::fill
 #include <stdexcept>
 #include <iostream>
+#include <cmath>
 
 Matrix::Matrix(size_t rows, size_t cols){
     if (rows == 0 || cols == 0) {
@@ -151,4 +152,59 @@ Matrix Matrix::transpose() const {
         }
     }
     return result;
+}
+
+Matrix Matrix::makeDiagonalMatrix() const {
+    if (rows != cols) {
+        throw std::invalid_argument("Матрица должна быть квадратной");
+    }
+    Matrix result(rows, cols);
+    for (size_t i = 1; i <= rows; i++) {
+        for (size_t j = 1; j <= cols; j++) {
+            if (i == j) {
+                result(i, j) = 1;
+            } 
+        }
+    }
+    return result;
+}
+
+double Matrix::determinant() const {
+    if (rows != cols) {
+        throw std::invalid_argument("Матрица должна быть квадратной для вычисления определителя");
+    }
+
+    double det = 1.0;
+    // Создаём копию матрицы для проведения вычислений
+    Matrix temp = *this;
+
+    for (size_t i = 1; i <= temp.rows; i++){
+        size_t pivot = i;
+        // Поиск максимального элемента в текущем столбце для частичного выбора главного элемента
+        for (size_t j = i + 1; j <= temp.rows; j++){
+            if (std::abs(temp(j, i)) > std::abs(temp(pivot, i))){
+                pivot = j;
+            }
+        }
+        // Если найденный ведущий элемент не стоит на диагонали, меняем строки местами
+        if (pivot != i){
+            for (size_t j = 1; j <= temp.cols; j++){
+                std::swap(temp(i, j), temp(pivot, j));
+            }
+            det = -det; // Меняем знак определителя при перестановке строк
+        }
+        // Если на диагонали элемент равен нулю, определитель равен нулю
+        if (temp(i, i) == 0){
+            return 0.0;
+        }
+        det *= temp(i, i);
+        // Приводим матрицу к верхнетреугольному виду
+        for (size_t j = i + 1; j <= temp.rows; j++){
+            double factor = temp(j, i) / temp(i, i);
+            for (size_t k = i; k <= temp.cols; k++){
+                temp(j, k) -= factor * temp(i, k);
+            }
+        }
+    }
+    return det;
 }
