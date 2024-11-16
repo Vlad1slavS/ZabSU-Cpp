@@ -15,14 +15,20 @@ private:
 public:
     // Конструкторы
     Matrix(size_t rows, size_t cols);
-    Matrix(size_t size); // Для создания квадратной матрицы
+    Matrix(size_t size);
     Matrix(const std::vector<std::vector<double> > &init);
-    // Получение i-й строки и j-й элемента матрицы
+    // Метод получения строки по индексу
     std::vector<double> getRow(size_t row) const;
+    // Метод заполнения матрицы
     void fill(double value);
+    // Метод получения количества строк
     size_t getRowscnt() const;
+    // Метод получения количества столбцов
     size_t getColscnt() const;
+    // Метод вывода матрицы
     void printMatrix() const;
+    // Метод полчения доступа к элемнту i-й строки и j-го столбца
+    double& operator()(size_t i, size_t j);
 };
 
 Matrix::Matrix(size_t rows, size_t cols)
@@ -62,12 +68,17 @@ void Matrix::printMatrix() const
     }
 }
 
+double& Matrix::operator()(size_t i, size_t j)  {
+    return data[i * cols + j];
+}
+
 int main()
 {
     Matrix square(3);
     cout << "Матрица создана!" << endl;
-    square.fill(2.0);
+    square.fill(3.0);
     square.printMatrix();
-    square.getRowscnt();
+    double element = square(2, 2);
+    cout << element << endl;
     return 0;
 }
