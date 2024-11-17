@@ -15,6 +15,7 @@ private:
 public:
     // Конструкторы
     Matrix(size_t rows, size_t cols);
+    Matrix();
     Matrix(size_t size);
     Matrix(const std::vector<std::vector<double> >& init);
     // Метод получения строки по индексу
@@ -46,6 +47,9 @@ public:
     Matrix makeDiagonalMatrix() const;
     // Вычисления определителя матрицы (методом Гаусса)
     double determinant() const;
+    Matrix operator-=(const Matrix& other);
+    Matrix operator+=(const Matrix& other);
+    Matrix operator*=(double scalar);
 };
 
 #endif // MATRIX_H

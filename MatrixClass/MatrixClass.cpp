@@ -60,6 +60,7 @@ void Matrix::printMatrix() const
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
 // Доступ к элементам
@@ -160,6 +161,36 @@ Matrix Matrix::operator*(const Matrix& other) const {
         }
     }
     return result;
+}
+ 
+ // Перегрузка оператора +=
+Matrix Matrix::operator+=(const Matrix& other) {
+    if (rows != other.rows || cols != other.cols) {
+        throw std::invalid_argument("Размеры матриц не совпадают");
+    }
+    for (size_t i = 0; i < data.size(); ++i) { 
+        data[i] += other.data[i]; 
+    }
+    return *this; 
+}
+
+// Перегрузка оператора -=
+Matrix Matrix::operator-=(const Matrix& other) {
+    if (rows != other.rows || cols != other.cols) {
+        throw std::invalid_argument("Размеры матриц не совпадают");
+    }
+    for (size_t i = 0; i < data.size(); ++i) { 
+        data[i] -= other.data[i]; 
+    }
+    return *this; 
+}
+
+// Перегрузка оператора *= для умножения матрицы на скаляр
+Matrix Matrix::operator*=(double scalar) {
+    for (size_t i = 1; i < data.size(); i++) {
+        data[i] += scalar;
+    }
+    return *this;
 }
 
 // Транспонирование матрицы

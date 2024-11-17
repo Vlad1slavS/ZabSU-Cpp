@@ -27,12 +27,19 @@ int main()
         G.transpose();
         // Создание диагональной матрицы
         Matrix Z(4);
-        Z.makeDiagonalMatrix().printMatrix();
+        Z.makeDiagonalMatrix();
         // Вычисление определителя матрицы
         Matrix H(3);
         H.fillRand();
-        H.printMatrix();
-        cout << H.determinant() << endl; 
+        // += -= *=
+        Matrix I(3);
+        I.fill(2);
+        I.printMatrix();
+        I += A;
+        I.printMatrix();
+        I -= A;
+        I.printMatrix();
+
 
     }
     catch (const std::exception& e)
