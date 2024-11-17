@@ -39,7 +39,11 @@ int main()
         I.printMatrix();
         I -= A;
         I.printMatrix();
-
+        // Метод получения доступа к строке по ее индексу
+        std::vector<double> arr = A.getRow(2);
+        for (double i : arr){
+            cout << arr[i] << " ";
+        }
 
     }
     catch (const std::exception& e)
