@@ -24,7 +24,10 @@ Matrix::Matrix(size_t rows, size_t cols) {
 }
 
 // Конструктор: создаёт квадратную матрицу указанного размера, заполняет нулями
-Matrix::Matrix(size_t size) : rows(size), cols(size), data(size * size, 0.0) {}
+Matrix::Matrix(size_t size) : rows(size), cols(size), data(size * size, 0.0) {} 
+
+// "rows(size), cols(size), data(size * size, 0.0)" 
+// синтаксис используется для инициализации полей класса перед выполнением тела конструктора (обычно для инициализации констант)
 
 // Конструктор по умолчанию: создаёт пустую матрицу
 Matrix::Matrix() {
@@ -42,7 +45,7 @@ std::vector<double> Matrix::getRow(size_t row) const {
     }
     std::vector<double> rowData(cols);
     for (size_t j = 1; j <= cols; j++) {
-        rowData[j - 1] = (*this)(row, j);
+        rowData[j - 1] = (*this)(row, j); // *this для доступа к элементам текущего экземпляра матрицы (разыменование)
     }
     return rowData;
 }

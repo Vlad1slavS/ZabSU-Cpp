@@ -34,14 +34,22 @@ int main()
         m7.fill(2.0);
         m8.fill(3.0);
         Matrix res = m7 + m8;
-        assert(res(1, 1) == 5.0);
+        for (size_t i = 1; i <= 2; i++) {
+            for (size_t j = 1; j <= 2; j++) {
+                assert(res(i, j) == 5.0);
+            }
+        }
     }
     // Тест метода умножения матрицы на скаляр
     {
         Matrix m11(2, 2);
         m11.fill(2.0);
         Matrix res3 = m11 * 3.0;
-        assert(res3(1, 1) == 6.0);
+        for (size_t i = 1; i <= 2; i++) {
+            for (size_t j = 1; j <= 2; j++) {
+                assert(res3(i, j) == 6.0);
+            }
+        }
     }
     // Тест метода случанйого заполнения матрицы (на диапозон разброса значения)
     {
