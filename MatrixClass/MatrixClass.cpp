@@ -1,16 +1,20 @@
 // Автор: Степанов В. ИВТ-23
+// Реализация класса Matrix
+// Назначение: Предоставляет методы работы с матрицами, включая операции,
+// математические вычисления и вывод данных.
 
 #include "MatrixClass.h"
-#include <cstdlib> 
-#include <ctime>
-#include <algorithm> 
-#include <stdexcept>
-#include <iostream>
-#include <cmath>
+#include <cstdlib>  // Для генерации случайных чисел
+#include <ctime>    // Для инициализации случайного генератора времени
+#include <algorithm> // Для использования std::fill и std::swap
+#include <stdexcept> // Для обработки исключений
+#include <iostream>  // Для вывода данных
+#include <cmath>     // Для математических операций
 
+// ===== Конструкторы =====
 
-// Конструктор (с кол-вом колонок и строк)
-Matrix::Matrix(size_t rows, size_t cols){
+// Конструктор: инициализирует матрицу заданными строками и столбцами, заполняет нулями
+Matrix::Matrix(size_t rows, size_t cols) {
     if (rows == 0 || cols == 0) {
         throw std::invalid_argument("Размеры матрицы должны быть положительными");
     }
@@ -18,47 +22,50 @@ Matrix::Matrix(size_t rows, size_t cols){
     this->cols = cols;
     this->data = std::vector<double>(rows * cols, 0.0);
 }
-// Конструктор (с размером квадратной матрицы)
+
+// Конструктор: создаёт квадратную матрицу указанного размера, заполняет нулями
 Matrix::Matrix(size_t size) : rows(size), cols(size), data(size * size, 0.0) {}
 
-Matrix::Matrix(){
+// Конструктор по умолчанию: создаёт пустую матрицу
+Matrix::Matrix() {
     this->rows = 0;
     this->cols = 0;
     this->data = std::vector<double>(0, 0.0);
 }
 
-// Получение строки по ее индексу (от 1 до n)
-std::vector<double> Matrix::getRow(size_t row) const
-{
-    if (row < 1 || row > rows)
-    {
+// ===== Методы доступа =====
+
+// Получение строки матрицы по индексу (от 1 до n)
+std::vector<double> Matrix::getRow(size_t row) const {
+    if (row < 1 || row > rows) {
         throw std::out_of_range("Индекс строки вне диапазона");
     }
     std::vector<double> rowData(cols);
-    for (size_t j = 1; j <= cols; j++)
-    {
+    for (size_t j = 1; j <= cols; j++) {
         rowData[j - 1] = (*this)(row, j);
     }
     return rowData;
 }
 
-// Заполнение матрицы значением value   
-void Matrix::fill(double value)
-{
+// Заполнение матрицы заданным значением
+void Matrix::fill(double value) {
     std::fill(data.begin(), data.end(), value);
 }
 
-// Получение количества строк и столбцов матрицы
+// Получение количества строк матрицы
 size_t Matrix::getRowscnt() const { return rows; }
+
+// Получение количества столбцов матрицы
 size_t Matrix::getColscnt() const { return cols; }
 
+
+// ===== Вывод и сохранение данных =====
+
+
 // Вывод матрицы на экран
-void Matrix::printMatrix() const
-{
-    for (size_t i = 1; i <= rows; i++)
-    {
-        for (size_t j = 1; j <= cols; j++)
-        {
+void Matrix::printMatrix() const {
+    for (size_t i = 1; i <= rows; i++) {
+        for (size_t j = 1; j <= cols; j++) {
             std::cout << (*this)(i, j) << " ";
         }
         std::cout << std::endl;
@@ -66,30 +73,31 @@ void Matrix::printMatrix() const
     std::cout << std::endl;
 }
 
-// Сохранение матрицы в виде строки
-std::string Matrix::savetostring(){
+// Сохранение матрицы в строковое представление
+std::string Matrix::savetostring() {
     std::ostringstream oss;
-    if (data.size() > 0){
-        for (size_t i = 1; i < rows; i++){
-            for (size_t j = 1; j <= cols; j++){
+    if (data.size() > 0) {
+        for (size_t i = 1; i <= rows; i++) {
+            for (size_t j = 1; j <= cols; j++) {
                 oss << (*this)(i, j) << " ";
             }
+            oss << "\n";
         }
     }
-    std::cout << "Матрица сохранена в строке!!!" << std::endl;
     return oss.str();
 }
 
-// Доступ к элементам
-double& Matrix::operator()(size_t i, size_t j)
-{
+// ===== Операции с элементами матрицы =====
+
+// Доступ к элементу матрицы (с возможностью изменения)
+double& Matrix::operator()(size_t i, size_t j) {
     if (i < 1 || i > rows || j < 1 || j > cols) {
         throw std::out_of_range("Индексы вне диапазона");
     }
     return data[(i - 1) * cols + (j - 1)];
 }
 
-// Доступ к элементам (константный)
+// Доступ к элементу матрицы (только для чтения)
 double Matrix::operator()(size_t i, size_t j) const {
     if (i < 1 || i > rows || j < 1 || j > cols) {
         throw std::out_of_range("Индексы вне диапазона");
@@ -97,61 +105,51 @@ double Matrix::operator()(size_t i, size_t j) const {
     return data[(i - 1) * cols + (j - 1)];
 }
 
-// Заполнение матрицы случайными числами
-void Matrix::fillRand()
-{
+// Заполнение матрицы случайными числами в диапазоне [0, 1]
+void Matrix::fillRand() {
     static bool first_call = true;
-    if (first_call)
-    {
+    if (first_call) {
         std::srand(static_cast<unsigned int>(std::time(0)));
         first_call = false;
     }
-    for (size_t i = 1; i <= rows; ++i)
-    {
-        for (size_t j = 1; j <= cols; ++j)
-        {
+    for (size_t i = 1; i <= rows; ++i) {
+        for (size_t j = 1; j <= cols; ++j) {
             (*this)(i, j) = static_cast<double>(std::rand()) / RAND_MAX;
         }
     }
 }
 
-// Перегрузка оператора "+" для сложения матриц
-Matrix Matrix::operator+(const Matrix& other) const
-{
-    if (rows != other.rows || cols != other.cols)
-    {
+// ===== Операции над матрицами =====
+
+// Сложение двух матриц
+Matrix Matrix::operator+(const Matrix& other) const {
+    if (rows != other.rows || cols != other.cols) {
         throw std::invalid_argument("Размеры матриц не совпадают");
     }
     Matrix result(rows, cols);
-    for (size_t i = 1; i <= rows; i++)
-    {
-        for (size_t j = 1; j <= cols; j++)
-        {
+    for (size_t i = 1; i <= rows; i++) {
+        for (size_t j = 1; j <= cols; j++) {
             result(i, j) = (*this)(i, j) + other(i, j);
         }
     }
     return result;
 }
 
-// Перегрузка оператора "-" для вычитания матриц
-Matrix Matrix::operator-(const Matrix& other) const
-{
-    if (rows != other.rows || cols != other.cols)
-    {
+// Вычитание одной матрицы из другой
+Matrix Matrix::operator-(const Matrix& other) const {
+    if (rows != other.rows || cols != other.cols) {
         throw std::invalid_argument("Размеры матриц не совпадают");
     }
-    Matrix res(rows, cols);
-    for (size_t i = 1; i <= rows; i++)
-    {
-        for (size_t j = 1; j <= cols; j++)
-        {
-            res(i, j) = (*this)(i, j) - other(i, j);
+    Matrix result(rows, cols);
+    for (size_t i = 1; i <= rows; i++) {
+        for (size_t j = 1; j <= cols; j++) {
+            result(i, j) = (*this)(i, j) - other(i, j);
         }
     }
-    return res;
+    return result;
 }
 
-// Перегрузка оператора "*" для умножения матрицы на скаляр
+// Умножение матрицы на скаляр
 Matrix Matrix::operator*(double scalar) const {
     Matrix result(rows, cols);
     for (size_t i = 1; i <= rows; ++i) {
@@ -162,10 +160,10 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
-// Перегрузка оператора "*" для умножения матриц
+// Умножение двух матриц
 Matrix Matrix::operator*(const Matrix& other) const {
     if (cols != other.rows) {
-        throw std::invalid_argument("Количество столбцов первой матрицы должно быть равно количеству строк второй матрицы");
+        throw std::invalid_argument("Количество столбцов первой матрицы должно совпадать с количеством строк второй");
     }
     Matrix result(rows, other.cols);
     for (size_t i = 1; i <= rows; i++) {
@@ -179,40 +177,44 @@ Matrix Matrix::operator*(const Matrix& other) const {
     }
     return result;
 }
- 
- // Перегрузка оператора +=
+
+// ===== Перегрузка операторов для изменения матриц =====
+
+// Сложение матриц с присваиванием
 Matrix Matrix::operator+=(const Matrix& other) {
     if (rows != other.rows || cols != other.cols) {
         throw std::invalid_argument("Размеры матриц не совпадают");
     }
-    for (size_t i = 0; i < data.size(); ++i) { 
-        data[i] += other.data[i]; 
-    }
-    return *this; 
-}
-
-// Перегрузка оператора -=
-Matrix Matrix::operator-=(const Matrix& other) {
-    if (rows != other.rows || cols != other.cols) {
-        throw std::invalid_argument("Размеры матриц не совпадают");
-    }
-    for (size_t i = 0; i < data.size(); ++i) { 
-        data[i] -= other.data[i]; 
-    }
-    return *this; 
-}
-
-// Перегрузка оператора *= для умножения матрицы на скаляр
-Matrix Matrix::operator*=(double scalar) {
-    for (size_t i = 1; i < data.size(); i++) {
-        data[i] += scalar;
+    for (size_t i = 0; i < data.size(); ++i) {
+        data[i] += other.data[i];
     }
     return *this;
 }
 
+// Вычитание матриц с присваиванием
+Matrix Matrix::operator-=(const Matrix& other) {
+    if (rows != other.rows || cols != other.cols) {
+        throw std::invalid_argument("Размеры матриц не совпадают");
+    }
+    for (size_t i = 0; i < data.size(); ++i) {
+        data[i] -= other.data[i];
+    }
+    return *this;
+}
+
+// Умножение матрицы на скаляр с присваиванием
+Matrix Matrix::operator*=(double scalar) {
+    for (size_t i = 0; i < data.size(); ++i) {
+        data[i] *= scalar;
+    }
+    return *this;
+}
+
+// ===== Дополнительные операции =====
+
 // Транспонирование матрицы
 Matrix Matrix::transpose() const {
-    Matrix result(rows, cols);
+    Matrix result(cols, rows);
     for (size_t i = 1; i <= rows; i++) {
         for (size_t j = 1; j <= cols; j++) {
             result(j, i) = (*this)(i, j);
@@ -228,47 +230,46 @@ Matrix Matrix::makeDiagonalMatrix() const {
     }
     Matrix result(rows, cols);
     for (size_t i = 1; i <= rows; i++) {
-        for (size_t j = 1; j <= cols; j++) {
-            if (i == j) {
-                result(i, j) = 1;
-            } 
-        }
+        result(i, i) = (*this)(i, i);
     }
     return result;
 }
 
-// Вычисление определителя (методом Гаусса)
+// Вычисление определителя методом Гаусса
 double Matrix::determinant() const {
     if (rows != cols) {
         throw std::invalid_argument("Матрица должна быть квадратной для вычисления определителя");
     }
+    double det = 1.0; // Инициализация определителя
+    Matrix temp = *this; // Создаем копию матрицы для работы
 
-    double det = 1.0;
-    Matrix temp = *this;
-
-    for (size_t i = 1; i <= temp.rows; i++){
+    for (size_t i = 1; i <= temp.rows; i++) {
+        // Поиск ведущего элемента в текущем столбце
         size_t pivot = i;
-        for (size_t j = i + 1; j <= temp.rows; j++){
-            if (std::abs(temp(j, i)) > std::abs(temp(pivot, i))){
+        for (size_t j = i + 1; j <= temp.rows; j++) {
+            if (std::abs(temp(j, i)) > std::abs(temp(pivot, i))) {
                 pivot = j;
             }
         }
-        if (pivot != i){
-            for (size_t j = 1; j <= temp.cols; j++){
+        // Если ведущий элемент найден в другой строке, меняем строки местами
+        if (pivot != i) {
+            for (size_t j = 1; j <= temp.cols; j++) {
                 std::swap(temp(i, j), temp(pivot, j));
             }
-            det = -det; 
+            det = -det; // Инвертируем знак определителя
         }
-        if (temp(i, i) == 0){
+        // Если элемент на диагонали равен нулю, определитель равен нулю
+        if (temp(i, i) == 0) {
             return 0.0;
         }
-        det *= temp(i, i);
-        for (size_t j = i + 1; j <= temp.rows; j++){
+        det *= temp(i, i); // Умножаем определитель на диагональный элемент
+        // Приводим остальные строки к треугольному виду
+        for (size_t j = i + 1; j <= temp.rows; j++) {
             double factor = temp(j, i) / temp(i, i);
-            for (size_t k = i; k <= temp.cols; k++){
+            for (size_t k = i; k <= temp.cols; k++) {
                 temp(j, k) -= factor * temp(i, k);
             }
         }
     }
-    return det;
+    return det; // Возвращаем вычисленный определитель
 }
