@@ -1,9 +1,13 @@
+// Автор: Степанов В. ИВТ-23
+
 #ifndef MATRIX_H
 #define MATRIX_H
 
 #include <vector>
 #include <stdexcept>
 #include <iostream>
+#include <string>
+#include <sstream>
 
 class Matrix
 {
@@ -17,7 +21,6 @@ public:
     Matrix(size_t rows, size_t cols);
     Matrix();
     Matrix(size_t size);
-    Matrix(const std::vector<std::vector<double> >& init);
     // Метод получения строки по индексу
     std::vector<double> getRow(size_t row) const;
     // Метод заполнения матрицы
@@ -47,9 +50,12 @@ public:
     Matrix makeDiagonalMatrix() const;
     // Вычисления определителя матрицы (методом Гаусса)
     double determinant() const;
+    // Перегрузка операторов
     Matrix operator-=(const Matrix& other);
     Matrix operator+=(const Matrix& other);
     Matrix operator*=(double scalar);
+    // Сохранение матрицы в виде строки
+    std::string savetostring();
 };
 
 #endif // MATRIX_H

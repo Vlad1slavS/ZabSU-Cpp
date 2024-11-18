@@ -1,3 +1,5 @@
+// Автор: Степанов В. ИВТ-23
+
 #include "MatrixClass.h"
 #include <cstdlib> 
 #include <ctime>
@@ -5,6 +7,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <cmath>
+
 
 // Конструктор (с кол-вом колонок и строк)
 Matrix::Matrix(size_t rows, size_t cols){
@@ -24,7 +27,7 @@ Matrix::Matrix(){
     this->data = std::vector<double>(0, 0.0);
 }
 
-// Получение строки
+// Получение строки по ее индексу (от 1 до n)
 std::vector<double> Matrix::getRow(size_t row) const
 {
     if (row < 1 || row > rows)
@@ -45,11 +48,11 @@ void Matrix::fill(double value)
     std::fill(data.begin(), data.end(), value);
 }
 
-// Получение количества строк и столбцов
+// Получение количества строк и столбцов матрицы
 size_t Matrix::getRowscnt() const { return rows; }
 size_t Matrix::getColscnt() const { return cols; }
 
-// Вывод матрицы
+// Вывод матрицы на экран
 void Matrix::printMatrix() const
 {
     for (size_t i = 1; i <= rows; i++)
@@ -61,6 +64,20 @@ void Matrix::printMatrix() const
         std::cout << std::endl;
     }
     std::cout << std::endl;
+}
+
+// Сохранение матрицы в виде строки
+std::string Matrix::savetostring(){
+    std::ostringstream oss;
+    if (data.size() > 0){
+        for (size_t i = 1; i < rows; i++){
+            for (size_t j = 1; j <= cols; j++){
+                oss << (*this)(i, j) << " ";
+            }
+        }
+    }
+    std::cout << "Матрица сохранена в строке!!!" << std::endl;
+    return oss.str();
 }
 
 // Доступ к элементам
