@@ -112,17 +112,3 @@ for (auto it = v.begin(); it != v.end(); ++it) {
     std::cout << *it << " "; // Выводит значения всех элементов вектора
 }
 ```
-
-### Заключение
-
-`std::vector` является мощным инструментом для работы с динамическими массивами в C++. Он предоставляет множество функций для управления данными, что делает его предпочтительным выбором для большинства задач программирования на C++.
-
-Citations:
-[1] https://www.codeguru.com/cplusplus/c-tutorial-a-beginners-guide-to-stdvector-part-1/
-[2] https://www.geeksforgeeks.org/vector-in-cpp-stl/
-[3] https://www.programiz.com/cpp-programming/vectors
-[4] https://home.csulb.edu/~pnguyen/cecs282/lecnotes/Vectors.pdf
-[5] https://www.simplilearn.com/tutorials/cpp-tutorial/cpp-vector
-[6] https://www.w3schools.com/cpp/cpp_vectors.asp
-[7] https://pro1.cs.upc.edu/pdfs/IP08_Vectors.pdf
-[8] https://www.codewithharry.com/tutorial/cpp-vectors/
