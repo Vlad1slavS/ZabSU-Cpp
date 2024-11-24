@@ -60,6 +60,8 @@ int main() {
     dynamicContacts[1] = new Contact("Ольга Орлова", "555-5678", "olga@example.com", "Улица Мира, д. 4");
 
 
+    dynamicContacts[0]->saveToFile("input.txt");
+
     contact1.toString();
     
     contacts[0].loadFromFile("input.txt");
