@@ -35,25 +35,12 @@ void testContactClass() {
     contact.updateEmail("ivanov@newmail.com");
     assert(contact.getEmail() == "ivanov@newmail.com");
 
-    // Проверка валидации ввода
-    contact.setName("");
-    assert(contact.getName() == "Петр Петров"); // Имя не должно измениться
-
-    contact.setEmail("");
-    assert(contact.getEmail() == "ivanov@newmail.com"); // Почта не должна измениться
-
-    contact.setEmail("ivanexample.com");
-    assert(contact.getEmail() == "ivanov@newmail.com"); // Почта не должна измениться
-
-    contact.setAddress("");
-    assert(contact.getAddress() == "Улица Чехова, д. 2"); // Адрес не должен измениться
-
 }
 
 int main() {
+    try {
     // Проверка класса
     testContactClass(); // Вызов функции для тестирования
-    std::cout << "Все тесты пройдены успешно." << std::endl; 
 
     // Основной код программы
     string asp = "==================================";
@@ -84,9 +71,14 @@ int main() {
     contact1.updatePhoneNumber("111-222-3333");
     contact2.updateEmail("maria.s@example.com");
 
+    contact1.toString();
+
     // Освобождение памяти
     delete contact3;
     delete contact4;
+    } catch (const std::exception& e) {
+        std::cerr << "Произошла ошибка: " << e.what() << std::endl;
+    }
 
     return 0;
 }

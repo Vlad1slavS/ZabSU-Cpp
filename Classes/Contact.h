@@ -36,6 +36,10 @@ public:
 
     // Метод отображения информации
     void displayInfo() const;
+
+    std::string toString() const;
+
+    
 };
 
 #endif // CONTACT_H
