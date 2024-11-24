@@ -59,15 +59,17 @@ int main() {
     dynamicContacts[0] = new Contact("Алексей Алексеев", "555-1234", "alex@example.com", "Улица Кирова, д. 3");
     dynamicContacts[1] = new Contact("Ольга Орлова", "555-5678", "olga@example.com", "Улица Мира, д. 4");
 
-
+    // Метод сохранения отдельного объекта из массива указателей
     dynamicContacts[0]->saveToFile("input.txt");
 
     contact1.toString();
     
+    // Загрузка объекта из файлов
     contacts[0].loadFromFile("input.txt");
+    // Загрузка объекта contact2 в файл
     contact2.saveToFile("output.txt");
 
-    // Освобождение памяти
+    // Освобождение памяти для всех объектов
     delete contact3;
     delete contact4;
     delete dynamicContacts[0];
