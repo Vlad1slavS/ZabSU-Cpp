@@ -10,6 +10,8 @@ Contact::Contact(const std::string &name, const std::string &phoneNumber,
                  const std::string &email, const std::string &address)
     : name(name), phoneNumber(phoneNumber), email(email), address(address) {}
 
+Contact::Contact() : name(""), phoneNumber(""), email(""), address("") {}
+
 // Геттеры
 std::string Contact::getName() const { return name; }
 std::string Contact::getPhoneNumber() const { return phoneNumber; }
@@ -52,14 +54,6 @@ void Contact::setAddress(const std::string &newAddress) {
     address = newAddress;
 }
 
-// Методы обновления
-void Contact::updatePhoneNumber(const std::string &newPhoneNumber) {
-    phoneNumber = newPhoneNumber;
-}
-
-void Contact::updateEmail(const std::string &newEmail) {
-    setEmail(newEmail);  // Используем существующий метод setEmail для валидации
-}
 
 // Отображение информации
 void Contact::displayInfo() const {
@@ -107,3 +101,4 @@ void Contact::loadFromFile(const std::string &filename) {
     cout << "Контакт успешно загружен из файла." << endl;
     file.close();
 }
+

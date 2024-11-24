@@ -3,6 +3,7 @@
 #include <string>
 #include <cassert>
 #include "Contact.h"
+#include <vector>
 
 using namespace std;
 
@@ -28,13 +29,6 @@ void testContactClass() {
     contact.setAddress("Улица Чехова, д. 2");
     assert(contact.getAddress() == "Улица Чехова, д. 2");
 
-    // Проверка методов обновления
-    contact.updatePhoneNumber("111-222-3333");
-    assert(contact.getPhoneNumber() == "111-222-3333");
-
-    contact.updateEmail("ivanov@newmail.com");
-    assert(contact.getEmail() == "ivanov@newmail.com");
-
 }
 
 int main() {
@@ -42,44 +36,42 @@ int main() {
     // Проверка класса
     testContactClass(); // Вызов функции для тестирования
 
-    // Основной код программы
-    string asp = "==================================";
-
+    // Статический объект
     Contact contact1("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");
     Contact contact2("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2");
 
     // Динамическое создание объекта
-    cout << asp << endl;
-    cout << "Динамическое создание объекта" << endl;
     Contact *contact3 = new Contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1");  
     Contact *contact4 = new Contact("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2");
 
-    // Отображаем информацию о контактах
-    contact3->displayInfo();
-    std::cout << std::endl;
-    contact4->displayInfo();
+    //  Вектор объектов
+    std::vector<Contact> contacts;
+    contacts.push_back(contact1);
 
-    cout << asp << endl;
+    // Статическое создание массива объектов.
+    Contact staticContacts[] = {
+        Contact("Иван Иванов", "123-456-7890", "ivan@example.com", "Улица Пушкина, д. 1"),
+        Contact("Мария Смирнова", "987-654-3210", "maria@example.com", "Улица Лермонтова, д. 2")
+    };
 
-    // Отображаем информацию о контактах
-    cout << "Пример использования класса Contact" << endl;
-    contact1.displayInfo();
-    std::cout << std::endl;
-    contact2.displayInfo();
+    // Создание массива указателей на объекты
+    Contact** dynamicContacts = new Contact*[2];
+    dynamicContacts[0] = new Contact("Алексей Алексеев", "555-1234", "alex@example.com", "Улица Кирова, д. 3");
+    dynamicContacts[1] = new Contact("Ольга Орлова", "555-5678", "olga@example.com", "Улица Мира, д. 4");
 
-    // Обновляем номер телефона и почту контакта
-    contact1.updatePhoneNumber("111-222-3333");
-    contact2.updateEmail("maria.s@example.com");
 
     contact1.toString();
     
-    contact2.loadFromFile("input.txt");
-    contact1.saveToFile("output.txt");
+    contacts[0].loadFromFile("input.txt");
     contact2.saveToFile("output.txt");
 
     // Освобождение памяти
     delete contact3;
     delete contact4;
+    delete dynamicContacts[0];
+    delete dynamicContacts[1];
+    delete[] dynamicContacts;
+
     } catch (const std::exception& e) {
         std::cerr << "Произошла ошибка: " << e.what() << std::endl;
     }

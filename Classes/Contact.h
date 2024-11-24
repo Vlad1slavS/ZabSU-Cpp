@@ -17,6 +17,7 @@ public:
     // Конструктор
     Contact(const std::string &name, const std::string &phoneNumber,
             const std::string &email, const std::string &address);
+    Contact();
 
     // Геттеры
     std::string getName() const;
@@ -29,10 +30,6 @@ public:
     void setPhoneNumber(const std::string &newPhoneNumber);
     void setEmail(const std::string &newEmail);
     void setAddress(const std::string &newAddress);
-
-    // Методы обновления
-    void updatePhoneNumber(const std::string &newPhoneNumber);
-    void updateEmail(const std::string &newEmail);
 
     // Метод отображения информации
     void displayInfo() const;
