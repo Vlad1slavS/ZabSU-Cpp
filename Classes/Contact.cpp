@@ -1,6 +1,9 @@
 #include "Contact.h"
 #include <iostream>
 #include <sstream>
+#include <fstream>
+
+using namespace std;
 
 // Конструктор
 Contact::Contact(const std::string &name, const std::string &phoneNumber,
@@ -73,4 +76,34 @@ std::string Contact::toString() const {
         << "Электронная почта: " << email << "\n"
         << "Адрес: " << address << "\n";
     return oss.str();
+}
+
+void Contact::saveToFile(const std::string &filename) const {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Не удалось открыть файл для записи.");
+    }
+    file << toString();
+    file.close();
+}
+
+void Contact::loadFromFile(const std::string &filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Не удалось открыть файл для чтения.");
+    }
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line == "Контакт:") {
+            std::getline(file, name);
+        } else if (line == "Телефон:") {
+            std::getline(file, phoneNumber);
+        } else if (line == "Электронная почта:") {
+            std::getline(file, email);
+        } else if (line == "Адрес:") {
+            std::getline(file, address);
+        }
+    }
+    cout << "Контакт успешно загружен из файла." << endl;
+    file.close();
 }

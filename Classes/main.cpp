@@ -72,6 +72,10 @@ int main() {
     contact2.updateEmail("maria.s@example.com");
 
     contact1.toString();
+    
+    contact2.loadFromFile("input.txt");
+    contact1.saveToFile("output.txt");
+    contact2.saveToFile("output.txt");
 
     // Освобождение памяти
     delete contact3;

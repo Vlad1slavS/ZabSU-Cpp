@@ -39,7 +39,9 @@ public:
 
     std::string toString() const;
 
-    
+    void saveToFile(const std::string &filename) const;
+    void loadFromFile(const std::string &filename);
+
 };
 
 #endif // CONTACT_H
