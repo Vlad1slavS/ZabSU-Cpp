@@ -1,3 +1,5 @@
+g++ -std=c++11 -I./Character -I./Warrior -I./Mage main.cpp Character/Character.cpp Warrior/Warrior.cpp Mage/Mage.cpp -o main
+
 @startuml
 class Character {
     - name : String
