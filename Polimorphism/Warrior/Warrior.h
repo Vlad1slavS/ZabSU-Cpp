@@ -17,8 +17,8 @@ public:
     void printStatus() const override;
 
     // Сеттеры для ограниченной установки значений (не больше максимальных значений)
-    void setDefense(int defense);
-    void setStamina(int stamina);
+    void setDefense(uint defense);
+    void setStamina(uint stamina);
 
 private:
 

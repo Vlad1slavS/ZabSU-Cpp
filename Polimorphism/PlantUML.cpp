@@ -10,6 +10,7 @@ class Character {
     + printStatus() : void
     + getHealth() : int
     + setHealth(int health) : void;
+    + setAttack(int attack) : void
 }
 
 class Warrior extends Character {

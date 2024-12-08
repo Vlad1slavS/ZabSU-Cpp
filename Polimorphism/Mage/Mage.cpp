@@ -24,6 +24,10 @@ void Mage::printStatus() const {
 
 int Mage::getMana() const { return mana_; }
 
-void Mage::setMana(int mana) {
+void Mage::setMana(uint mana) {
+    if (mana > MAX_MANA) {
+        throw std::invalid_argument("Мана мага не может превышать максимальное значение (100)");
+        return;
+    }
     mana_ = std::max(0, std::min(mana, MAX_MANA));
 }

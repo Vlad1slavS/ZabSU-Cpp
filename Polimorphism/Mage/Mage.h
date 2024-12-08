@@ -18,7 +18,7 @@ public:
 
     // Геттер маны и сеттер
     int getMana() const;
-    void setMana(int mana);
+    void setMana(uint mana);
 
 private:
     // Максимальное значение маны

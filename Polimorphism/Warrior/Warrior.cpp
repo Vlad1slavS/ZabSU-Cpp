@@ -24,10 +24,18 @@ void Warrior::printStatus() const {
               << ", Выносливость: " << stamina_ << std::endl;
 }
 
-void Warrior::setDefense(int defense) {
+void Warrior::setDefense(uint defense) {
+    if (defense > MAX_DEFENSE) {
+        throw std::invalid_argument("Защита воина не может превышать максимальное значение (20)");
+        return;
+    }
     defense_ = std::max(0, std::min(defense, MAX_DEFENSE));
 }
 
-void Warrior::setStamina(int stamina) {
+void Warrior::setStamina(uint stamina) {
+    if (stamina > MAX_STAMINA) {
+        throw std::invalid_argument("Выносливость воина не может превышать максимальное значение (100)");
+        return;
+    }
     stamina_ = std::max(0, std::min(stamina, MAX_STAMINA));
 }
