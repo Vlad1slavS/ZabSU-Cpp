@@ -1,5 +1,8 @@
 #include "Character.h"
 
+// Определения статических констант
+const int Character::MAX_HEALTH = 100;
+const int Character::MAX_ATTACK = 50;
 
 Character::Character(std::string name, int health, int attack)
     : name_(name), health_(std::max(0, std::min(health, MAX_HEALTH))), attack_(std::max(0, std::min(attack, MAX_ATTACK))) {}
