@@ -21,10 +21,11 @@ public:
     void setMana(int mana);
 
 private:
-    int mana_; // Мана мага
-
     // Максимальное значение маны
     static const int MAX_MANA;
+
+    int mana_; // Мана мага
+
 };
 
 #endif // MAGE_H

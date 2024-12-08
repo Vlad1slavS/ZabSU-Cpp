@@ -21,12 +21,14 @@ public:
     void setStamina(int stamina);
 
 private:
-    int defense_; // Защита воина
-    int stamina_; // Выносливость воина
 
     // Максимальные значения защиты и выносливости
     static const int MAX_DEFENSE;
     static const int MAX_STAMINA;
+
+    int defense_; // Защита воина
+    int stamina_; // Выносливость воина
+
 };
 
 #endif // WARRIOR_H

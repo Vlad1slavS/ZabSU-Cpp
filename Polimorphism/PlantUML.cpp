@@ -3,31 +3,30 @@ g++ -std=c++11 -I./Character -I./Warrior -I./Mage main.cpp Character/Character.c
 @startuml
 class Character {
     - name : String
-    - health : int
-    - attack : int
+    - health : uint
+    - attack : uint
     + Character(name: String, health: int, attack: int)
     + attack(target: Character) : void
     + printStatus() : void
     + getHealth() : int
+    + setHealth(int health) : void;
 }
 
 class Warrior extends Character {
-    - stamina : int
-    - defense : int
+    - stamina : uint
+    - defense : uint
     + Warrior(name: String, health: int, attack: int, defense: int)
     + attack(target: Character) : void
     + printStatus() : void
 }
 
 class Mage extends Character {
-    - mana : int
+    - mana : uint
     + Mage(name: String, health: int, attack: int, mana: int)
     + attack(target: Character) : void
     + printStatus() : void
     + getMana() : int
 }
 
-Character <|-- Warrior
-Character <|-- Mage
 
 @enduml

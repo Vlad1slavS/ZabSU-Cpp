@@ -29,17 +29,18 @@ public:
     void takeDamage(int damage);
 
     // Сеттеры для ограниченной установки значений
-    void setHealth(int health);
-    void setAttack(int attack);
+    void setHealth(uint health);
+    void setAttack(uint attack);
 
 protected:
+    // Максимальные значения характеристик
+    static const int MAX_HEALTH; 
+    static const int MAX_ATTACK;
+
     std::string name_; // Имя персонажа
     int health_;       // Здоровье персонажа
     int attack_;       // Атака персонажа
 
-    // Максимальные значения характеристик
-    static const int MAX_HEALTH; 
-    static const int MAX_ATTACK;
 };
 
 #endif // CHARACTER_H

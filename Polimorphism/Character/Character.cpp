@@ -34,10 +34,18 @@ void Character::takeDamage(int damage) {
     setHealth(health_ - damage);
 }
 
-void Character::setHealth(int health) {
+void Character::setHealth(uint health) {
+    if (health > MAX_HEALTH) {
+        throw std::invalid_argument("Здоровье персонажа не может превышать максимальное значение (100)");
+        return;
+    }
     health_ = std::max(0, std::min(health, MAX_HEALTH));
 }
 
-void Character::setAttack(int attack) {
+void Character::setAttack(uint attack) {
+    if (attack > MAX_ATTACK) {
+        throw std::invalid_argument("Атака персонажа не может превышать максимальное значение (50)");
+        return;
+    }
     attack_ = std::max(0, std::min(attack, MAX_ATTACK));
 }

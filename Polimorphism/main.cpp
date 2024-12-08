@@ -4,17 +4,26 @@
 #include "Mage/Mage.h"
 
 int main() {
-    // Создание персонажей
-    Warrior warrior("Валентин", 100, 15, 5, 20);
-    Mage mage("Агния", 80, 20, 50);
+    try
+    {
+        // Создание персонажей
+        Warrior warrior("Валентин", 100, 15, 5, 20);
+        Mage mage("Агния", 80, 20, 50);
 
-    // Вывод начального статуса
-    warrior.printStatus();
-    mage.printStatus();
+        // Вывод начального статуса
+        warrior.printStatus();
+        mage.printStatus();
 
-    // Атаки и обновление статуса
-    warrior.attack(mage);
-    mage.attack(warrior);
+        // Атаки и обновление статуса
+        warrior.attack(mage);
+        mage.attack(warrior);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+
 
     return 0;
 }
