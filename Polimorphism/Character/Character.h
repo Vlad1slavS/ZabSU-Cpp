@@ -10,12 +10,12 @@
 class Character {
 public:
     // Конструктор
-    Character(std::string name, int health, int attack);
+    Character(std::string name, uint health, uint attack);
 
     // Виртуальный деструктор
     virtual ~Character() = default; // default деструктор нызывается, когда объект выходит из области видимости или явно удаляется
 
-    // Атака, которая наносит урон цели
+    // Атака, которая наносит урон цели target
     virtual void attack(Character& target) const;
 
     // Вывод статуса персонажа на экран

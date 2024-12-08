@@ -8,7 +8,7 @@
 class Mage : public Character {
 public:
     // Конструктор
-    Mage(std::string name, int health, int attack, int mana);
+    Mage(std::string name, uint health, uint attack, uint mana);
 
     // Переопределение метода атаки
     void attack(Character& target) const override;

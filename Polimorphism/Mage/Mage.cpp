@@ -3,7 +3,7 @@
 // Определение статической константы
 const int Mage::MAX_MANA = 100;
 
-Mage::Mage(std::string name, int health, int attack, int mana)
+Mage::Mage(std::string name, uint health, uint attack, uint mana)
     : Character(name, health, attack), mana_(std::max(0, std::min(mana, MAX_MANA))) {}
 
 void Mage::attack(Character& target) const {

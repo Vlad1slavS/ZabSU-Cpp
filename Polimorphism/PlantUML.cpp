@@ -5,28 +5,30 @@ class Character {
     - name : String
     - health : uint
     - attack : uint
-    + Character(name: String, health: int, attack: int)
+    + Character(name: String, health: uint, attack: uint)
     + attack(target: Character) : void
     + printStatus() : void
-    + getHealth() : int
-    + setHealth(int health) : void;
-    + setAttack(int attack) : void
+    + getHealth() : uint
+    + setHealth(uint health) : void;
+    + setAttack(uint attack) : void;
 }
 
 class Warrior extends Character {
     - stamina : uint
     - defense : uint
-    + Warrior(name: String, health: int, attack: int, defense: int)
+    + Warrior(name: String, health: uint, attack: uint, defense: uint)
     + attack(target: Character) : void
     + printStatus() : void
+    + setDefense(uint defense) : void;
 }
 
 class Mage extends Character {
     - mana : uint
-    + Mage(name: String, health: int, attack: int, mana: int)
+    + Mage(name: String, health: uint, attack: uint, mana: uint)
     + attack(target: Character) : void
     + printStatus() : void
-    + getMana() : int
+    + getMana() : uint
+    + setMana(uint mana) : void;
 }
 
 

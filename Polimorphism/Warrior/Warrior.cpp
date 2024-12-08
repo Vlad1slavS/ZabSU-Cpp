@@ -4,7 +4,7 @@
 const int Warrior::MAX_DEFENSE = 20;
 const int Warrior::MAX_STAMINA = 100;
 
-Warrior::Warrior(std::string name, int health, int attack, int defense, int stamina)
+Warrior::Warrior(std::string name, uint health, uint attack, uint defense, uint stamina)
     : Character(name, health, attack), defense_(std::max(0, std::min(defense, MAX_DEFENSE))), stamina_(std::max(0, std::min(stamina, MAX_STAMINA))) {}
 
 void Warrior::attack(Character& target) const {

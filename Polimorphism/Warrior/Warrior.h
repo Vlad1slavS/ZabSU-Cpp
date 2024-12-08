@@ -8,7 +8,7 @@
 class Warrior : public Character {
 public:
     // Конструктор
-    Warrior(std::string name, int health, int attack, int defense, int stamina);
+    Warrior(std::string name, uint health, uint attack, uint defense, uint stamina);
 
     // Переопределение метода атаки
     void attack(Character& target) const override;
